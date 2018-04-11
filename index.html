@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Trivia!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./assets/javascript/app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="jumbotron">
+                    <h1>TRIVIA GAME</h1>
+                    <h2>Time Remaining: <span id="seconds-remaining">30</span> Seconds</h2>
+                        <button class="btn btn-primary">
+                            start
+                        </button>
+                    <h2 id="question">question</h2>
+                    <h3 id="answer1">answer1</h3>
+                    <h3 id="answer2">answer2</h3>
+                    <h3 id="answer3">answer3</h3>
+                    <h3 id="answer4">answer4</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var questions = ["question1", "question2", "question3", "question4", "question5", "question6", "question7"];
+    $(".btn").on("click", function() {
+        $("h3").css("display","block");
+        $("h2").css("display","block");
+        var count=3;
+        var counter=setInterval(timer, 1000);
+        function timer() {
+            count=count-1;
+            if (count < 0) {
+                clearInterval(counter);
+                return;
+            }
+            
+
+        };
+        
+    });
+    
+        $("#seconds-remaining").text(count);
+        if (count == 0) {
+            $("#question").text("Out of time!");
+                setTimeout(fiveSeconds, 1000 * 5);
+                function fiveSeconds() {
+                    count == 3;
+                    timer();
+                    alert("hi");
+                }
+        };
+        $("#answer1").on("click", function() {
+            alert("answer1");
+        });
+        $("#answer2").on("click", function() {
+            alert("answer2");
+        });
+        $("#answer3").on("click", function() {
+            alert("answer3");
+        });
+        $("#answer4").on("click", function() {
+            alert("answer4");
+        });
+    
+
+    
+            // for (i = 0; i < questions.length; i++) {
+            //     $("#question").text.questions[i];
+            //     }
+    </script>
+</body>
+</html>
