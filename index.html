@@ -36,6 +36,7 @@
         var answer3 = ["answer3A", "answer3B", "answer3C", "answer3D", "answer3E", "answer3F", "answer3G"];
         var answer4 = ["answer4A", "answer4B", "answer4C", "answer4D", "answer4E", "answer4F", "answer4G"];
         var trueAnswer = [answer1[0], answer2[1], answer3[2], answer4[3], answer1[4], answer2[5], answer3[6]];
+        var count = 0;
         
         $("#start").on("click", gameLoop);
 
@@ -48,28 +49,27 @@
             $("#answer2").text(answer2[0]);
             $("#answer3").text(answer3[0]);
             $("#answer4").text(answer4[0]);
-            var count=3;
-            var counter=setInterval(timer, 1000);
+            var count = 3;
+            var counter = setInterval(timer, 1000);
             function timer() {
                 count--;
                 if (count < 0) {
                     clearInterval(counter);
                     return;
                 }
-                
 
             $("#seconds-remaining").text(count);
             if (count == 0) {
-                $("#question").text("Out of time!");
+                $("#question").html("Out of time!" + "<br>" + "<strong>" + trueAnswer[0] + "</strong>");
                     setTimeout(twoSeconds, 1000 * 2);
                     function twoSeconds() {
-                        count == 3;
-                        timer();
                         $("#question").text(questions[1]);
                         $("#answer1").text(answer1[1]);
                         $("#answer2").text(answer2[1]);
                         $("#answer3").text(answer3[1]);
                         $("#answer4").text(answer4[1]);
+                        gameLoop();
+                        console.log(count);
                     }
                 };
             };
@@ -77,6 +77,9 @@
         };
         $("#answer1").on("click", function() {
             alert("answer1");
+            if (answer1[0]) {
+                alert("right answer");
+            }
         });
         $("#answer2").on("click", function() {
             alert("answer2");
