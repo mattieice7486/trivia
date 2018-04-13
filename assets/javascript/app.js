@@ -63,14 +63,14 @@ var quiz7 = {
 
 var quizzes = [quiz1, quiz2, quiz3, quiz4, quiz5, quiz6, quiz7];
 
-var gameStart = gameLoop;
+var gameLoop;
 var i = 0;
 var correct = 0;
 var wrong = 0;
 var interrupt = false;
 var gameTimer;
 
-$("#start").on("click", gameStart);
+$("#start").on("click", gameLoop);
 $("#new-game").on("click", resetGame);
 
 function resetGame() {
@@ -94,7 +94,7 @@ function gameLoop() {
     $("#correct-answer").html("&nbsp;");
     var interrupt = false;
     console.log(interrupt);
-    var count = 3;
+    var count = 10;
     var counter = setInterval(timer, 1000);
 
     function timer() {
@@ -132,12 +132,12 @@ $(".btn-block").on("click", function () {
         alert(quizzes[i].correctAnswer);
         correct++;
         clearTimeout(gameTimer);
-        gameTimer = setTimeout(gameLoop, 1000 * 2);
+        nextQuestion();
     } else {
         wrong++;
         alert("wrong answer");
         clearTimeout(gameTimer);
-        gameTimer = setTimeout(gameLoop, 1000 * 2);
+        nextQuestion();
     };
 });
 // $("#answer2").on("click", function () {    
