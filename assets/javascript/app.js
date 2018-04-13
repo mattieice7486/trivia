@@ -67,8 +67,8 @@ var gameStart = gameLoop;
 var i = 0;
 var correct = 0;
 var wrong = 0;
-
-
+var interrupt = false;
+var gameTimer;
 
 $("#start").on("click", gameStart);
 $("#new-game").on("click", resetGame);
@@ -77,7 +77,7 @@ function resetGame() {
     var i = 0;
     var correct = 0;
     var wrong = 0;
-    var count = 30;
+    var count = 5;
     gameLoop();
 };
 
@@ -91,7 +91,9 @@ function gameLoop() {
     $("#answer2").text(quizzes[i].answer2);
     $("#answer3").text(quizzes[i].answer3);
     $("#answer4").text(quizzes[i].answer4);
-    $("#correct-answer").html("&nbsp;")
+    $("#correct-answer").html("&nbsp;");
+    var interrupt = false;
+    console.log(interrupt);
     var count = 3;
     var counter = setInterval(timer, 1000);
 
@@ -106,7 +108,7 @@ function gameLoop() {
         if (count == 0) {
             $("#question").html("Out of time!");
             $("#correct-answer").html("<strong>Correct Answer:</strong>" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>");
-            setTimeout(nextQuestion, 1000 * 2);
+            gameTimer = setTimeout(nextQuestion, 1000 * 2);
             wrong++;
         };
     };
@@ -118,23 +120,24 @@ function nextQuestion() {
         $("#new-game").css("display", "initial");
         $(".btn-block").css("display", "none");
         $("h2").css("display", "none");
-        $("#game-over").html("Correct Answers: " + correct + "<br>" + "Wrong Answers: " + wrong + "<br>" + "new game?")                
+        $("#game-over").html("Correct Answers: " + correct + "<br>" + "Wrong Answers: " + wrong + "<br>" + "new game?")
     } else {
-    gameLoop();
+        gameLoop();
     };
 };
 
 $(".btn-block").on("click", function () {
-	selectedAnswer = $(this).text();
+    selectedAnswer = $(this).text();
     if (selectedAnswer === quizzes[i].correctAnswer) {
         alert(quizzes[i].correctAnswer);
-        correct++
-        setTimeout(gameLoop, 1000 * 2);
-        
+        correct++;
+        clearTimeout(gameTimer);
+        gameTimer = setTimeout(gameLoop, 1000 * 2);
     } else {
-        wrong++
+        wrong++;
         alert("wrong answer");
-        setTimeout(gameLoop, 1000 * 2);
+        clearTimeout(gameTimer);
+        gameTimer = setTimeout(gameLoop, 1000 * 2);
     };
 });
 // $("#answer2").on("click", function () {    
@@ -167,6 +170,3 @@ $(".btn-block").on("click", function () {
 //         alert("wrong answer");
 //     };
 // });
-
-
-
