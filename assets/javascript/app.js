@@ -99,13 +99,13 @@ function gameLoop() {
         $("#seconds-remaining").text(count);
         if (count == 0) {
             $("#question").html("Out of time!");
-            $("#correct-answer").html("<strong>Correct Answer:</strong>" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>" + "<br>" + "<img src='../assets/images/correctAnswer1.jpg>'");
+            $("#correct-answer").html("<strong>Correct Answer:</strong>" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>" + "<br><br>" + "<img src='assets/images/correctAnswer" + (i + 1) + ".jpg' alt='image'>");
             gameTimer = setTimeout(nextQuestion, 1000 * 2);
             wrong++;
         } else if (interrupt === true) {
             clearInterval(counter);
             $("#seconds-remaining").text("30");
-            $("#correct-answer").html("<strong>Correct Answer:</strong>" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>" + "<br>" + "<img src='assets/images/correctAnswer" + (i + 1) + ".jpg' alt='image'>");
+            $("#correct-answer").html("<strong>Correct Answer:</strong>" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>" + "<br><br>" + "<img src='assets/images/correctAnswer" + (i + 1) + ".jpg' alt='image'>");
             gameTimer = setTimeout(nextQuestion, 1000 * 2);
         } ;
     };
