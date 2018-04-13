@@ -6,14 +6,6 @@ h1 {
     font-size: 50px;
 }
 
-h2, .btn-block, #new-game {
+h2, .btn-block {
     display: none;
 }
-
-/* h3 {
-    transition: transform .3s;
-}
-
-h3:hover {
-    transform: scale(1.5);
-} */

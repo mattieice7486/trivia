@@ -69,16 +69,9 @@ var correct = 0;
 var wrong = 0;
 var interrupt;
 var gameTimer;
+var alreadyClicked;
 
 $("#start").on("click", gameLoop);
-$("#new-game").on("click", resetGame);
-
-function resetGame() {
-    var i = 0;
-    var correct = 0;
-    var wrong = 0;
-    var count = 5;
-};
 
 function gameLoop() {
     $("#start").css("display", "none");
@@ -93,6 +86,7 @@ function gameLoop() {
     $("#answer4").text(quizzes[i].answer4);
     $("#correct-answer").html("&nbsp;");
     interrupt = false;
+    alreadyClicked = false;
     var count = 30;
     var counter = setInterval(timer, 1000);
 
@@ -134,14 +128,18 @@ function nextQuestion() {
 };
 
 $(".btn-block").on("click", function () {
+    if (alreadyClicked === false) {
     selectedAnswer = $(this).text();
     if (selectedAnswer === quizzes[i].correctAnswer) {
         $("#question").html("That's Correct!");
         correct++;
         interrupt = true;
+        alreadyClicked = true;
     } else {
+        $("#question").html("Incorrect!");
         wrong++;
         interrupt = true;
-        $("#question").html("Incorrect!");
+        alreadyClicked = true;
+    };
     };
 });
