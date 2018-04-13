@@ -99,13 +99,13 @@ function gameLoop() {
         $("#seconds-remaining").text(count);
         if (count == 0) {
             $("#question").html("Out of time!");
-            $("#correct-answer").html("<strong>Correct Answer:</strong>" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>");
+            $("#correct-answer").html("<strong>Correct Answer:</strong>" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>" + "<br>" + "<img src='../assets/images/correctAnswer1.jpg>'");
             gameTimer = setTimeout(nextQuestion, 1000 * 2);
             wrong++;
         } else if (interrupt === true) {
             clearInterval(counter);
             $("#seconds-remaining").text("30");
-            $("#correct-answer").html("<strong>Correct Answer:</strong>" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>");
+            $("#correct-answer").html("<strong>Correct Answer:</strong>" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>" + "<br>" + "<img src='assets/images/correctAnswer" + (i + 1) + ".jpg' alt='image'>");
             gameTimer = setTimeout(nextQuestion, 1000 * 2);
         } ;
     };
@@ -120,7 +120,7 @@ function nextQuestion() {
         $(".btn-block").css("display", "none");
         $("h2").css("display", "none");
         $("#game-over").css("display", "block");
-        $("#game-over").html("Correct Answers: " + correct + "<br>" + "Wrong Answers: " + wrong + "<br>" + "new game?");
+        $("#game-over").html("Correct Answers: " + correct + "<br>" + "Wrong Answers: " + wrong + "<br>" + "New Game?");
         i = 0;
         correct = 0;
         wrong = 0;
