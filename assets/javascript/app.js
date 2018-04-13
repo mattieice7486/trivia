@@ -65,29 +65,37 @@ var quizzes = [quiz1, quiz2, quiz3, quiz4, quiz5, quiz6, quiz7];
 
 var gameStart = gameLoop;
 var i = 0;
+var correct = 0;
+var wrong = 0;
 
-// for (i = 0; i < 7; i++) {    };
+
 
 $("#start").on("click", gameStart);
+$("#new-game").on("click", resetGame);
+
+function resetGame() {
+    var i = 0;
+    var correct = 0;
+    var wrong = 0;
+    var count = 30;
+    gameLoop();
+};
 
 function gameLoop() {
-    var questionNumber = quiz1;
     $("#start").css("display", "none");
-    $("h3").css("display", "block");
+    $(".btn-block").css("display", "block");
     $("h2").css("display", "block");
+    $("#seconds-remaining").text(count);
     $("#question").text(quizzes[i].question);
     $("#answer1").text(quizzes[i].answer1);
     $("#answer2").text(quizzes[i].answer2);
     $("#answer3").text(quizzes[i].answer3);
     $("#answer4").text(quizzes[i].answer4);
-    console.log("quiz" + i);
+    $("#correct-answer").html("&nbsp;")
     var count = 3;
     var counter = setInterval(timer, 1000);
 
-
-
     function timer() {
-
         count--;
 
         if (count < 0) {
@@ -96,44 +104,69 @@ function gameLoop() {
         }
         $("#seconds-remaining").text(count);
         if (count == 0) {
-            $("#question").html("Out of time!" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>");
+            $("#question").html("Out of time!");
+            $("#correct-answer").html("<strong>Correct Answer:</strong>" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>");
             setTimeout(nextQuestion, 1000 * 2);
-            function nextQuestion() {
-                i++;
-                gameLoop();
-            };
+            wrong++;
         };
-
     };
 };
-$("#answer1").on("click", function () {
-    if ($(this) === quizzes[i].correctAnswer) {
-        alert(quizzes[i].correctAnswer);
+
+function nextQuestion() {
+    i++;
+    if (i == 7) {
+        $("#new-game").css("display", "initial");
+        $(".btn-block").css("display", "none");
+        $("h2").css("display", "none");
+        $("#game-over").html("Correct Answers: " + correct + "<br>" + "Wrong Answers: " + wrong + "<br>" + "new game?")                
     } else {
+    gameLoop();
+    };
+};
+
+$(".btn-block").on("click", function () {
+	selectedAnswer = $(this).text();
+    if (selectedAnswer === quizzes[i].correctAnswer) {
+        alert(quizzes[i].correctAnswer);
+        correct++
+        setTimeout(gameLoop, 1000 * 2);
+        
+    } else {
+        wrong++
         alert("wrong answer");
+        setTimeout(gameLoop, 1000 * 2);
     };
 });
-$("#answer2").on("click", function () {
-    if ($(this) === quizzes[i].correctAnswer) {
-        alert(quizzes[i].correctAnswer);
-    } else {
-        alert("wrong answer");
-    };
-});
-$("#answer3").on("click", function () {
-    if ($(this) === quizzes[i].correctAnswer) {
-        alert(quizzes[i].correctAnswer);
-    } else {
-        alert("wrong answer");
-    };
-});
-$("#answer4").on("click", function () {
-    if ($(this) === quizzes[i].correctAnswer) {
-        alert(quizzes[i].correctAnswer);
-    } else {
-        alert("wrong answer");
-    };
-});
+// $("#answer2").on("click", function () {    
+// 	selectedAnswer = $(this).text();
+//     if (selectedAnswer === quizzes[i].correctAnswer) {
+//         alert(quizzes[i].correctAnswer);
+//         correct++
+//     } else {
+//         wrong++
+//         alert("wrong answer");
+//     };
+// });
+// $("#answer3").on("click", function () {
+// 	selectedAnswer = $(this).text();
+//     if (selectedAnswer === quizzes[i].correctAnswer) {
+//         alert(quizzes[i].correctAnswer);
+//         correct++
+//     } else {
+//         wrong++
+//         alert("wrong answer");
+//     };
+// });
+// $("#answer4").on("click", function () {
+// 	selectedAnswer = $(this).text();
+//     if (selectedAnswer === quizzes[i].correctAnswer) {
+//         alert(quizzes[i].correctAnswer);
+//         correct++
+//     } else {
+//         wrong++
+//         alert("wrong answer");
+//     };
+// });
 
 
 
