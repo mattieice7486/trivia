@@ -67,7 +67,7 @@ var gameLoop;
 var i = 0;
 var correct = 0;
 var wrong = 0;
-var interrupt = false;
+var interrupt;
 var gameTimer;
 
 $("#start").on("click", gameLoop);
@@ -78,7 +78,6 @@ function resetGame() {
     var correct = 0;
     var wrong = 0;
     var count = 5;
-    gameLoop();
 };
 
 function gameLoop() {
@@ -92,32 +91,35 @@ function gameLoop() {
     $("#answer3").text(quizzes[i].answer3);
     $("#answer4").text(quizzes[i].answer4);
     $("#correct-answer").html("&nbsp;");
-    var interrupt = false;
-    console.log(interrupt);
+    interrupt = false;
     var count = 10;
     var counter = setInterval(timer, 1000);
 
     function timer() {
         count--;
-
         if (count < 0) {
             clearInterval(counter);
             return;
-        }
+        };
         $("#seconds-remaining").text(count);
         if (count == 0) {
             $("#question").html("Out of time!");
             $("#correct-answer").html("<strong>Correct Answer:</strong>" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>");
             gameTimer = setTimeout(nextQuestion, 1000 * 2);
             wrong++;
-        };
+        } else if (interrupt === true) {
+            clearInterval(counter);
+            $("#correct-answer").html("<strong>Correct Answer:</strong>" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>");
+            gameTimer = setTimeout(nextQuestion, 1000 * 2);
+        } ;
     };
 };
 
 function nextQuestion() {
     i++;
     if (i == 7) {
-        $("#new-game").css("display", "initial");
+        resetGame();
+        $("#start").css("display", "initial");
         $(".btn-block").css("display", "none");
         $("h2").css("display", "none");
         $("#game-over").html("Correct Answers: " + correct + "<br>" + "Wrong Answers: " + wrong + "<br>" + "new game?")
@@ -129,15 +131,13 @@ function nextQuestion() {
 $(".btn-block").on("click", function () {
     selectedAnswer = $(this).text();
     if (selectedAnswer === quizzes[i].correctAnswer) {
-        alert(quizzes[i].correctAnswer);
+        $("#question").html("That's Correct!");
         correct++;
-        clearTimeout(gameTimer);
-        nextQuestion();
+        interrupt = true;
     } else {
         wrong++;
-        alert("wrong answer");
-        clearTimeout(gameTimer);
-        nextQuestion();
+        interrupt = true;
+        $("#question").html("Incorrect!");
     };
 });
 // $("#answer2").on("click", function () {    
