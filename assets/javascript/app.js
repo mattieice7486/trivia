@@ -84,6 +84,7 @@ function gameLoop() {
     $("#start").css("display", "none");
     $(".btn-block").css("display", "block");
     $("h2").css("display", "block");
+    $("#game-over").css("display", "none");
     $("#seconds-remaining").text(count);
     $("#question").text(quizzes[i].question);
     $("#answer1").text(quizzes[i].answer1);
@@ -92,7 +93,7 @@ function gameLoop() {
     $("#answer4").text(quizzes[i].answer4);
     $("#correct-answer").html("&nbsp;");
     interrupt = false;
-    var count = 10;
+    var count = 30;
     var counter = setInterval(timer, 1000);
 
     function timer() {
@@ -109,6 +110,7 @@ function gameLoop() {
             wrong++;
         } else if (interrupt === true) {
             clearInterval(counter);
+            $("#seconds-remaining").text("30");
             $("#correct-answer").html("<strong>Correct Answer:</strong>" + "<br>" + "<strong>" + quizzes[i].correctAnswer + "</strong>");
             gameTimer = setTimeout(nextQuestion, 1000 * 2);
         } ;
@@ -117,14 +119,17 @@ function gameLoop() {
 
 function nextQuestion() {
     i++;
-    if (i == 7) {
-        resetGame();
+    if (i < 7) {
+        gameLoop();
+    } else {
         $("#start").css("display", "initial");
         $(".btn-block").css("display", "none");
         $("h2").css("display", "none");
-        $("#game-over").html("Correct Answers: " + correct + "<br>" + "Wrong Answers: " + wrong + "<br>" + "new game?")
-    } else {
-        gameLoop();
+        $("#game-over").css("display", "block");
+        $("#game-over").html("Correct Answers: " + correct + "<br>" + "Wrong Answers: " + wrong + "<br>" + "new game?");
+        i = 0;
+        correct = 0;
+        wrong = 0;
     };
 };
 
@@ -140,33 +145,3 @@ $(".btn-block").on("click", function () {
         $("#question").html("Incorrect!");
     };
 });
-// $("#answer2").on("click", function () {    
-// 	selectedAnswer = $(this).text();
-//     if (selectedAnswer === quizzes[i].correctAnswer) {
-//         alert(quizzes[i].correctAnswer);
-//         correct++
-//     } else {
-//         wrong++
-//         alert("wrong answer");
-//     };
-// });
-// $("#answer3").on("click", function () {
-// 	selectedAnswer = $(this).text();
-//     if (selectedAnswer === quizzes[i].correctAnswer) {
-//         alert(quizzes[i].correctAnswer);
-//         correct++
-//     } else {
-//         wrong++
-//         alert("wrong answer");
-//     };
-// });
-// $("#answer4").on("click", function () {
-// 	selectedAnswer = $(this).text();
-//     if (selectedAnswer === quizzes[i].correctAnswer) {
-//         alert(quizzes[i].correctAnswer);
-//         correct++
-//     } else {
-//         wrong++
-//         alert("wrong answer");
-//     };
-// });
